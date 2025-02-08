@@ -46,7 +46,7 @@ const db = mysql.createPool({
   });
 
   app.use(cors({
-    origin:['http://10.40.210.149:3000','http://172.30.16.1:5173'],
+    origin:['http://10.40.210.149:3000','http://172.30.16.1:5173','http://10.40.210.149:3001'],
     credentials: true,
     optionSuccessStatus:200,
 }));
@@ -192,8 +192,40 @@ app.get('/profile', (req, res)=> {
     res.send({message: global.users});
     
 })
-app.get('/users', (req, res)=> {
-    db.query(`SELECT * FROM users"`, (err, result)=>{
+app.get('/users/food', (req, res)=> {
+    db.query(`SELECT * FROM users where Category = "Food"`, (err, result)=>{
+        if(err) throw err;
+        
+        const ids = result.map((user)=>user.id)
+        res.send({message: ids});
+    })
+})
+app.get('/users/hb', (req, res)=> {
+    db.query(`SELECT * FROM users where Category = "Health&Beauty"`, (err, result)=>{
+        if(err) throw err;
+        
+        const ids = result.map((user)=>user.id)
+        res.send({message: ids});
+    })
+})
+app.get('/users/ecom', (req, res)=> {
+    db.query(`SELECT * FROM users where Category = "Ecommerce"`, (err, result)=>{
+        if(err) throw err;
+        
+        const ids = result.map((user)=>user.id)
+        res.send({message: ids});
+    })
+})
+app.get('/users/retail', (req, res)=> {
+    db.query(`SELECT * FROM users where Category = "Retail"`, (err, result)=>{
+        if(err) throw err;
+        
+        const ids = result.map((user)=>user.id)
+        res.send({message: ids});
+    })
+})
+app.get('/users/tech', (req, res)=> {
+    db.query(`SELECT * FROM users where Category = "Technology"`, (err, result)=>{
         if(err) throw err;
         
         const ids = result.map((user)=>user.id)
